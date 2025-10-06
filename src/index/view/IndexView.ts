@@ -8,7 +8,7 @@ export default class IndexView {
     this.body = document.body
     this.main = this.body.querySelector('main') as HTMLElement
     this.menu = this.body.querySelector('menu') as HTMLElement
-    this.query = this.body.querySelector('query') as HTMLElement
+    this.query = this.body.querySelector('#search') as HTMLElement
   }
 
   readonly getMainHTML = (): HTMLElement => this.main

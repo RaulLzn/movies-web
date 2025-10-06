@@ -3,6 +3,7 @@ import PaginationModel from "../../shared/pagination/model/PaginationModel.js";
 export default class MovieModel extends Subject {
     movies;
     allMovies;
+    searchTerm = '';
     paginationModel;
     constructor() {
         super();
@@ -22,8 +23,32 @@ export default class MovieModel extends Subject {
         return this.movies;
     };
     getPaginatedMovies = () => {
-        this.movies = this.paginationModel.paginate(this.allMovies);
+        const filteredMovies = this.filterMovies();
+        this.movies = this.paginationModel.paginate(filteredMovies);
         return this.movies;
+    };
+    filterMovies = () => {
+        if (!this.searchTerm || this.searchTerm.trim() === '') {
+            return this.allMovies;
+        }
+        const term = this.searchTerm.toLowerCase();
+        return this.allMovies.filter((movie) => {
+            return ((movie.title && movie.title.toLowerCase().includes(term)) ||
+                (movie.extract && movie.extract.toLowerCase().includes(term)) ||
+                (movie.genres && movie.genres.some(genre => genre && genre.toLowerCase().includes(term))) ||
+                (movie.cast && movie.cast.some(actor => actor && actor.toLowerCase().includes(term))));
+        });
+    };
+    setSearchTerm = (term) => {
+        this.searchTerm = term;
+        const filteredMovies = this.filterMovies();
+        this.paginationModel.setTotalItems(filteredMovies.length);
+        this.paginationModel.goToPage(1);
+        this.getPaginatedMovies();
+        this.notifyAllObservers();
+    };
+    getSearchTerm = () => {
+        return this.searchTerm;
     };
     nextPage = () => {
         this.paginationModel.nextPage();

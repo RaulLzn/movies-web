@@ -7,7 +7,7 @@ export default class IndexView {
         this.body = document.body;
         this.main = this.body.querySelector('main');
         this.menu = this.body.querySelector('menu');
-        this.query = this.body.querySelector('query');
+        this.query = this.body.querySelector('#search');
     }
     getMainHTML = () => this.main;
     getMenuHTML = () => this.menu;

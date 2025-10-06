@@ -9,6 +9,10 @@ export default class MovieController {
     console.log('MovieController')
   }
 
+  readonly getModel = (): MovieModel => {
+    return this.model
+  }
+
   readonly initComponent = async () => {
     await this.model.initComponent()
     this.view.initComponent()
