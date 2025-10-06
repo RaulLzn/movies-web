@@ -4,14 +4,11 @@ export default class MovieModel extends Subject {
     movies;
     allMovies;
     paginationModel;
-    searchQuery = '';
-    filteredMovies;
     constructor() {
         super();
         this.movies = [];
         this.allMovies = [];
         this.paginationModel = new PaginationModel({ itemsPerPage: 10 });
-        this.filteredMovies = [];
     }
     fetchMovies = async () => {
         const response = await fetch("../database/movies-2020s.json");
@@ -25,8 +22,7 @@ export default class MovieModel extends Subject {
         return this.movies;
     };
     getPaginatedMovies = () => {
-        const moviesToPaginate = this.searchQuery ? this.filteredMovies : this.allMovies;
-        this.movies = this.paginationModel.paginate(moviesToPaginate);
+        this.movies = this.paginationModel.paginate(this.allMovies);
         return this.movies;
     };
     nextPage = () => {
@@ -51,29 +47,6 @@ export default class MovieModel extends Subject {
         this.allMovies = await this.fetchMovies();
         this.paginationModel.setTotalItems(this.allMovies.length);
         this.getPaginatedMovies();
-        this.notifyAllObservers();
-    };
-    searchMovies = (query) => {
-        // 1. Guardar el query (trim para quitar espacios)
-        this.searchQuery = query.trim().toLowerCase();
-        // 2. Si el query está vacío, restaurar todo
-        if (!this.searchQuery) {
-            this.filteredMovies = [];
-            this.paginationModel.setTotalItems(this.allMovies.length);
-            this.paginationModel.goToPage(1);
-            this.getPaginatedMovies();
-            this.notifyAllObservers();
-            return;
-        }
-        // 3. Filtrar películas por título
-        this.filteredMovies = this.allMovies.filter(movie => movie.title.toLowerCase().includes(this.searchQuery));
-        // 4. Actualizar paginación con nuevo total
-        this.paginationModel.setTotalItems(this.filteredMovies.length);
-        // 5. Ir a página 1
-        this.paginationModel.goToPage(1);
-        // 6. Obtener primeras 10 del filtro
-        this.getPaginatedMovies();
-        // 7. Notificar a la vista
         this.notifyAllObservers();
     };
 }
