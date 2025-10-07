@@ -1,0 +1,120 @@
+/* About Component Styles */
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.about-card {
+  background: var(--main-color-gradient);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--main-color);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-icon {
+  margin-bottom: 20px;
+  color: var(--main-color);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.about-title {
+  color: var(--main-color);
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.about-info {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.about-name {
+  color: var(--text-color-light);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.about-program {
+  color: var(--text-color-light);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.about-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid var(--main-color-light);
+}
+
+.about-footer p {
+  color: var(--text-color-light);
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.about-year {
+  color: var(--main-color);
+  font-weight: bold;
+  font-size: 1.1rem !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .about-card {
+    padding: 30px 20px;
+  }
+
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-name {
+    font-size: 1.4rem;
+  }
+
+  .about-program {
+    font-size: 1rem;
+  }
+
+  .about-icon svg {
+    width: 60px;
+    height: 60px;
+  }
+}

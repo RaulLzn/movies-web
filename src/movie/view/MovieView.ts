@@ -7,6 +7,7 @@ export default class MovieView extends Observer<MovieModel> {
   private readonly movie: HTMLElement
   private readonly movieTemplate: MovieTemplate
   private paginationController?: PaginationController
+  private domWasCleared: boolean = false
 
   constructor(private readonly parent: HTMLElement, movieModel: MovieModel) {
     super(movieModel)
@@ -20,6 +21,13 @@ export default class MovieView extends Observer<MovieModel> {
   }
 
   readonly initComponent = async () => {
+    // Asegurar que el elemento movie esté en el DOM
+    if (!this.parent.contains(this.movie)) {
+      this.parent.innerHTML = '' // Limpiar el contenido anterior
+      this.parent.appendChild(this.movie)
+      this.domWasCleared = true
+    }
+    
     const movies = (this.subject as MovieModel).getPaginatedMovies()
     this.movieTemplate.setMovies(movies)
     this.movie.innerHTML = this.movieTemplate.getMoviesGridHTML()
@@ -33,13 +41,15 @@ export default class MovieView extends Observer<MovieModel> {
       this.initComponent()
     }
     
-    if (!this.paginationController) {
+    // Si el DOM fue limpiado o no existe el controlador, crear uno nuevo
+    if (!this.paginationController || this.domWasCleared) {
       this.paginationController = new PaginationController(
         this.parent,
         model,
         onPageChange
       )
       this.paginationController.init()
+      this.domWasCleared = false
     } else {
       this.paginationController.update()
     }

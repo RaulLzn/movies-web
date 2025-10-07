@@ -1,21 +1,33 @@
 export default class MenuModel {
+    onShowHome;
+    onShowMovies;
+    onShowAbout;
+    onUpdateView;
     menu;
-    constructor() {
+    constructor(onShowHome, onShowMovies, onShowAbout, onUpdateView) {
+        this.onShowHome = onShowHome;
+        this.onShowMovies = onShowMovies;
+        this.onShowAbout = onShowAbout;
+        this.onUpdateView = onUpdateView;
         this.menu = [
             {
                 label: 'Home',
                 link: '#home',
-                active: false,
+                active: true,
                 action: () => {
-                    console.log('Home clicked');
+                    this.setActiveItem('Home');
+                    this.onUpdateView?.();
+                    this.onShowHome?.();
                 },
             },
             {
                 label: 'Rentals',
                 link: '#rentals',
-                active: true,
+                active: false,
                 action: () => {
-                    console.log('Rentals clicked');
+                    this.setActiveItem('Rentals');
+                    this.onUpdateView?.();
+                    this.onShowMovies?.();
                 },
             },
             {
@@ -23,11 +35,18 @@ export default class MenuModel {
                 link: '#about',
                 active: false,
                 action: () => {
-                    console.log('About clicked');
+                    this.setActiveItem('About');
+                    this.onUpdateView?.();
+                    this.onShowAbout?.();
                 },
             },
         ];
     }
     getMenu = () => this.menu;
+    setActiveItem = (label) => {
+        this.menu.forEach(item => {
+            item.active = item.label === label;
+        });
+    };
     initComponent = () => { };
 }

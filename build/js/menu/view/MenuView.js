@@ -10,6 +10,10 @@ export default class MenuView {
         this.menuTemplate.setMenu(menu);
         this.parent.appendChild(this.menuTemplate.getMenuNode());
     };
+    updateActiveState = (menu) => {
+        this.menuTemplate.setMenu(menu);
+        this.render();
+    };
     render = () => {
         this.parent.innerHTML = '';
         this.parent.appendChild(this.menuTemplate.getMenuNode());

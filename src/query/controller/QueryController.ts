@@ -12,7 +12,6 @@ export default class QueryController {
     this.model.initComponent()
     this.view.initComponent()
     
-    // Suscribirse a cambios en el input
     this.view.onSearch((term: string) => {
       this.model.setSearchTerm(term)
       this.onSearchChange(term)

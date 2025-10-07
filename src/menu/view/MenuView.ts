@@ -13,6 +13,11 @@ export default class MenuView {
     this.parent.appendChild(this.menuTemplate.getMenuNode())
   }
 
+  readonly updateActiveState = (menu: MenuItem[]): void => {
+    this.menuTemplate.setMenu(menu)
+    this.render()
+  }
+
   readonly render = () => {
     this.parent.innerHTML = ''
     this.parent.appendChild(this.menuTemplate.getMenuNode())

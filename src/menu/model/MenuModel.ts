@@ -3,22 +3,31 @@ import MenuItem from '../types/MenuItem.js'
 export default class MenuModel {
   private readonly menu: MenuItem[]
 
-  constructor() {
+  constructor(
+    private readonly onShowHome?: () => void,
+    private readonly onShowMovies?: () => void,
+    private readonly onShowAbout?: () => void,
+    private readonly onUpdateView?: () => void
+  ) {
     this.menu = [
       {
         label: 'Home',
         link: '#home',
-        active: false,
+        active: true,
         action: () => {
-          console.log('Home clicked')
+          this.setActiveItem('Home')
+          this.onUpdateView?.()
+          this.onShowHome?.()
         },
       },
       {
         label: 'Rentals',
         link: '#rentals',
-        active: true,
+        active: false,
         action: () => {
-          console.log('Rentals clicked')
+          this.setActiveItem('Rentals')
+          this.onUpdateView?.()
+          this.onShowMovies?.()
         },
       },
       {
@@ -26,13 +35,21 @@ export default class MenuModel {
         link: '#about',
         active: false,
         action: () => {
-          console.log('About clicked')
+          this.setActiveItem('About')
+          this.onUpdateView?.()
+          this.onShowAbout?.()
         },
       },
     ]
   }
 
   readonly getMenu = (): MenuItem[] => this.menu
+
+  readonly setActiveItem = (label: string): void => {
+    this.menu.forEach(item => {
+      item.active = item.label === label
+    })
+  }
 
   readonly initComponent = () => {}
 }
