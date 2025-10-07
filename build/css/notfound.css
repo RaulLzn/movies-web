@@ -1,0 +1,262 @@
+/* 404 Not Found Component Styles */
+
+.notfound-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.notfound-card {
+  background: var(--main-color-gradient);
+  border-radius: 20px;
+  padding: 50px 40px;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--main-color);
+  position: relative;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.notfound-animation {
+  position: relative;
+  margin-bottom: 30px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.film-reel {
+  color: var(--main-color);
+  animation: rotate 3s linear infinite;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.broken-film {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 4px;
+  background: var(--main-color);
+  animation: break 1.5s ease-in-out infinite;
+}
+
+.broken-film::before,
+.broken-film::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: var(--main-color);
+}
+
+.broken-film::before {
+  left: -90px;
+  transform: rotate(-20deg);
+  animation: breakLeft 1.5s ease-in-out infinite;
+}
+
+.broken-film::after {
+  right: -90px;
+  transform: rotate(20deg);
+  animation: breakRight 1.5s ease-in-out infinite;
+}
+
+@keyframes break {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes breakLeft {
+  0%, 100% { transform: rotate(-20deg) translateX(0); }
+  50% { transform: rotate(-25deg) translateX(-5px); }
+}
+
+@keyframes breakRight {
+  0%, 100% { transform: rotate(20deg) translateX(0); }
+  50% { transform: rotate(25deg) translateX(5px); }
+}
+
+.notfound-error-code {
+  font-size: 8rem;
+  font-weight: bold;
+  color: var(--main-color);
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+  margin: 20px 0;
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); }
+  25% { text-shadow: -4px 4px 8px rgba(224, 163, 29, 0.5); }
+  50% { text-shadow: 4px -4px 8px rgba(224, 163, 29, 0.5); }
+  75% { text-shadow: -4px -4px 8px rgba(0, 0, 0, 0.5); }
+}
+
+.notfound-title {
+  color: var(--text-color-light);
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.notfound-message {
+  color: var(--text-color-light);
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.notfound-suggestions {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 30px 0;
+  text-align: left;
+}
+
+.notfound-suggestions h3 {
+  color: var(--main-color);
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.notfound-suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notfound-suggestions li {
+  color: var(--text-color-light);
+  padding: 10px 0 10px 30px;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.notfound-suggestions li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: var(--main-color);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.notfound-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.notfound-actions button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 30px;
+  border: 2px solid var(--main-color);
+  background: rgba(224, 163, 29, 0.2);
+  color: var(--text-color-light);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notfound-actions button:hover {
+  background: var(--main-color);
+  color: var(--main-color-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(224, 163, 29, 0.4);
+}
+
+.notfound-actions button svg {
+  transition: transform 0.3s ease;
+}
+
+.notfound-actions button:hover svg {
+  transform: scale(1.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .notfound-card {
+    padding: 40px 25px;
+  }
+
+  .notfound-error-code {
+    font-size: 5rem;
+  }
+
+  .notfound-title {
+    font-size: 1.5rem;
+  }
+
+  .notfound-message {
+    font-size: 1rem;
+  }
+
+  .notfound-animation {
+    height: 120px;
+  }
+
+  .film-reel svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .broken-film {
+    width: 150px;
+  }
+
+  .notfound-suggestions {
+    padding: 20px 15px;
+  }
+
+  .notfound-suggestions h3 {
+    font-size: 1.1rem;
+  }
+
+  .notfound-suggestions li {
+    font-size: 0.9rem;
+    padding-left: 25px;
+  }
+
+  .notfound-actions {
+    flex-direction: column;
+  }
+
+  .notfound-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

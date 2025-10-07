@@ -3,12 +3,15 @@ import MovieModel from '../model/MovieModel.js'
 import MovieView from '../view/MovieView.js'
 
 export default class MovieFactory {
-  static readonly create = (parent: HTMLElement): MovieController => {
+  static readonly create = (
+    parent: HTMLElement,
+    onRentClick?: () => void
+  ): MovieController => {
     const model = new MovieModel()
     if (!model) {
       throw new Error('MovieModel not found')
     }
-    const view = new MovieView(parent, model)
+    const view = new MovieView(parent, model, onRentClick)
     if (!view) {
       throw new Error('MovieView not found')
     }

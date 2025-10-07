@@ -3,13 +3,15 @@ import MovieTemplate from '../template/MovieTemplate.js';
 import PaginationController from '../../shared/pagination/controller/PaginationController.js';
 export default class MovieView extends Observer {
     parent;
+    onRentClick;
     movie;
     movieTemplate;
     paginationController;
     domWasCleared = false;
-    constructor(parent, movieModel) {
+    constructor(parent, movieModel, onRentClick) {
         super(movieModel);
         this.parent = parent;
+        this.onRentClick = onRentClick;
         this.movie = document.createElement('movie');
         this.parent.appendChild(this.movie);
         this.movieTemplate = new MovieTemplate([]);
@@ -27,7 +29,16 @@ export default class MovieView extends Observer {
         const movies = this.subject.getPaginatedMovies();
         this.movieTemplate.setMovies(movies);
         this.movie.innerHTML = this.movieTemplate.getMoviesGridHTML();
+        this.attachRentButtonListeners();
         this.initPagination();
+    };
+    attachRentButtonListeners = () => {
+        const rentButtons = this.movie.querySelectorAll('.movie-btn-rental button');
+        rentButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                this.onRentClick?.();
+            });
+        });
     };
     initPagination = () => {
         const model = this.subject.getPaginationModel();

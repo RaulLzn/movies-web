@@ -3,6 +3,7 @@ import MovieFactory from '../../movie/factory/MovieFactory.js';
 import QueryFactory from '../../query/factory/Queryfactory.js';
 import AboutFactory from '../../about/factory/AboutFactory.js';
 import HomeFactory from '../../home/factory/HomeFactory.js';
+import NotFoundFactory from '../../notfound/factory/NotFoundFactory.js';
 export default class IndexController {
     model;
     view;
@@ -11,12 +12,14 @@ export default class IndexController {
     query;
     about;
     home;
+    notfound;
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.movie = MovieFactory.create(this.view.getMainHTML());
+        this.movie = MovieFactory.create(this.view.getMainHTML(), () => this.showNotFound());
         this.about = AboutFactory.create(this.view.getMainHTML());
         this.home = HomeFactory.create(this.view.getMainHTML());
+        this.notfound = NotFoundFactory.create(this.view.getMainHTML(), () => this.showHome(), () => this.showMovies());
         // Crear el menú con callbacks de navegación
         this.menu = MenuFactory.create(this.view.getMenuHTML(), () => this.showHome(), () => this.showMovies(), () => this.showAbout());
         // Conectar Query con Movie a través de callback
@@ -33,6 +36,9 @@ export default class IndexController {
     };
     showAbout = () => {
         this.about.initComponent();
+    };
+    showNotFound = () => {
+        this.notfound.initComponent();
     };
     initComponent = () => {
         this.model.initComponent();

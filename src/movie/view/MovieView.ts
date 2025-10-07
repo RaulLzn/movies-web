@@ -9,7 +9,11 @@ export default class MovieView extends Observer<MovieModel> {
   private paginationController?: PaginationController
   private domWasCleared: boolean = false
 
-  constructor(private readonly parent: HTMLElement, movieModel: MovieModel) {
+  constructor(
+    private readonly parent: HTMLElement, 
+    movieModel: MovieModel,
+    private readonly onRentClick?: () => void
+  ) {
     super(movieModel)
     this.movie = document.createElement('movie')
     this.parent.appendChild(this.movie)
@@ -31,7 +35,17 @@ export default class MovieView extends Observer<MovieModel> {
     const movies = (this.subject as MovieModel).getPaginatedMovies()
     this.movieTemplate.setMovies(movies)
     this.movie.innerHTML = this.movieTemplate.getMoviesGridHTML()
+    this.attachRentButtonListeners()
     this.initPagination()
+  }
+
+  private readonly attachRentButtonListeners = (): void => {
+    const rentButtons = this.movie.querySelectorAll('.movie-btn-rental button')
+    rentButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        this.onRentClick?.()
+      })
+    })
   }
 
   private readonly initPagination = (): void => {
